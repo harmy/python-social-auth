@@ -33,6 +33,8 @@ else:
             return x
         return x.decode(charset, errors)
 
+_always_safe = (b'abcdefghijklmnopqrstuvwxyz'
+                b'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-+')
 
 SETTING_PREFIX = 'SOCIAL_AUTH'
 
