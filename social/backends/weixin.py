@@ -26,10 +26,7 @@ class WeixinOAuth2(BaseOAuth2):
         """Return user details from Weixin. API URL is:
         https://api.weixin.qq.com/sns/userinfo
         """
-        if self.setting('DOMAIN_AS_USERNAME'):
-            username = response.get('domain', '')
-        else:
-            username = response.get('nickname', '')
+        username = response.get('nickname', '')
         return {
             'username': username,
             'profile_image_url': response.get('headimgurl', '')
@@ -99,3 +96,8 @@ class WeixinOAuth2(BaseOAuth2):
         self.process_error(response)
         return self.do_auth(response['access_token'], response=response,
                             *args, **kwargs)
+
+
+class WeixinMpOAuth2(WeixinOAuth2):
+    """Weixin Mp OAuth authentication backend"""
+    AUTHORIZATION_URL = 'https://open.weixin.qq.com/connect/oauth2/authorize'

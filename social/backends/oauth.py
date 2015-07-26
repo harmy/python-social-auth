@@ -4,7 +4,7 @@ from requests_oauthlib import OAuth1
 from oauthlib.oauth1 import SIGNATURE_TYPE_AUTH_HEADER
 
 from social.p3 import urlencode, unquote
-from social.utils import url_add_parameters, parse_qs, handle_http_errors
+from social.utils import url_add_parameters, parse_qs, handle_http_errors, url_encode
 from social.exceptions import AuthFailed, AuthCanceled, AuthUnknownError, \
                               AuthMissingParameter, AuthStateMissing, \
                               AuthStateForbidden, AuthTokenError
@@ -333,7 +333,7 @@ class BaseOAuth2(OAuthAuth):
         params = self.auth_params(state)
         params.update(self.get_scope_argument())
         params.update(self.auth_extra_arguments())
-        params = urlencode(params)
+        params = url_encode(params, sort=True)
         if not self.REDIRECT_STATE:
             # redirect_uri matching is strictly enforced, so match the
             # providers value exactly.
